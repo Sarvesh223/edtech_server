@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CmsModule } from './modules/cms.module';
+import { UserModule } from './modules/user.module';
+import { AnalyticsModule } from './modules/analytics.module';
 
 @Module({
   imports: [
@@ -17,12 +19,15 @@ import { CmsModule } from './modules/cms.module';
       useFactory: (configService: ConfigService) => ({
         uri:
           configService.get<string>('MONGODB_URI') ||
-          'mongodb://localhost:27017/edtech-website',   dbName: 'edtechplatform',
+          'mongodb://localhost:27017/edtech-website',
+        dbName: 'edtechplatform',
       }),
       inject: [ConfigService],
     }),
     // CMS Module
     CmsModule,
+    UserModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
